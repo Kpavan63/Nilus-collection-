@@ -3,193 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bulk UPC Label Generator - Professional Edition</title>
+  <title>Bulk UPC Label Generator</title>
   <style>
-    /* --- GLOBAL RESET --- */
+    /* --- RESET --- */
     * { 
       box-sizing: border-box; 
-      margin: 0;
-      padding: 0;
     }
     
     body {
       margin: 0;
       padding: 20px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f8fafc;
-      color: #1e293b;
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
     }
 
-    /* --- INPUT FORM STYLING --- */
+    /* --- SCREEN ONLY: INPUT FORM --- */
     .input-panel {
-      max-width: 900px;
+      max-width: 800px;
       margin: 0 auto;
       background: white;
-      padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
-      border: 1px solid #e2e8f0;
-    }
-
-    .header-section {
-      text-align: center;
-      margin-bottom: 35px;
-      padding-bottom: 25px;
-      border-bottom: 3px solid #3b82f6;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     .input-panel h1 { 
-      font-size: 32px;
-      font-weight: 800;
-      color: #1e40af;
-      margin-bottom: 8px;
-      letter-spacing: -0.5px;
-    }
-
-    .subtitle {
-      color: #64748b;
-      font-size: 15px;
-      font-weight: 500;
-    }
-
-    .alert-box {
-      background: #fef3c7;
-      border: 2px solid #fbbf24;
-      border-radius: 10px;
-      padding: 14px 18px;
-      margin-bottom: 25px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #92400e;
+      margin-top: 0; 
+      color: #2563eb; 
+      font-size: 28px;
     }
     
     .form-group { 
-      margin-bottom: 24px; 
+      margin-bottom: 15px; 
     }
     
     .form-group label { 
       display: block; 
-      font-weight: 700; 
-      margin-bottom: 8px;
-      color: #334155;
-      font-size: 15px;
+      font-weight: bold; 
+      margin-bottom: 5px; 
     }
     
-    input {
+    input, textarea {
       width: 100%;
-      padding: 14px 16px;
-      border: 2px solid #cbd5e1;
-      border-radius: 10px;
-      font-size: 15px;
-      font-family: inherit;
-      transition: all 0.3s ease;
-      background: #f8fafc;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: #3b82f6;
-      background: white;
-      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
     }
 
     textarea {
-      width: 100%;
-      padding: 16px;
-      border: 2px solid #cbd5e1;
-      border-radius: 10px;
-      font-size: 15px;
-      font-family: 'Consolas', 'Courier New', monospace;
-      transition: all 0.3s ease;
-      background: #f8fafc;
+      min-height: 200px;
+      font-family: 'Courier New', monospace;
       resize: vertical;
-      min-height: 220px;
-      line-height: 1.6;
-    }
-
-    textarea:focus {
-      outline: none;
-      border-color: #3b82f6;
-      background: white;
-      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-    }
-
-    textarea::placeholder {
-      color: #94a3b8;
-      font-style: italic;
-    }
-
-    .button-group {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 30px;
+      line-height: 1.5;
     }
     
     button {
-      background: #3b82f6;
-      color: white;
-      border: none;
-      padding: 16px 32px;
-      font-size: 16px;
-      font-weight: 700;
-      border-radius: 10px;
+      background: #2563eb; 
+      color: white; 
+      border: none; 
+      padding: 12px 24px;
+      font-size: 16px; 
+      font-weight: bold; 
+      border-radius: 5px; 
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
-      flex: 1;
-      min-width: 180px;
+      margin-right: 10px;
+      margin-top: 10px;
     }
     
     button:hover { 
-      background: #2563eb;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
-    }
-
-    button:active {
-      transform: translateY(0);
+      background: #1d4ed8; 
     }
     
     .btn-print { 
-      background: #10b981;
-      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+      background: #059669; 
     }
     
     .btn-print:hover { 
-      background: #059669;
-      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+      background: #047857; 
     }
 
     /* --- PRINT PREVIEW AREA --- */
     #previewArea {
-      margin-top: 40px;
+      margin-top: 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px 0;
-      gap: 30px;
     }
 
-    /* --- A4 PAGE - SCREEN VIEW --- */
+    /* --- A4 PAGE STYLING FOR SCREEN --- */
     .page {
       width: 210mm;
       height: 297mm;
       background: white;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-      border: 1px solid #e2e8f0;
-      position: relative;
-      padding: 0;
-      page-break-after: always;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      
+      /* FLEX LAYOUT FOR EXACT 3 LABELS */
       display: flex;
       flex-direction: column;
+      
+      padding: 10mm; /* Safe print margin inside the page */
+      page-break-after: always;
+      overflow: hidden; /* Cut off anything that overflows */
     }
 
-    /* --- LABEL CONTAINER (EXACTLY 3 PER PAGE) --- */
     .label-container {
-      width: 210mm;
-      height: 99mm; /* 297mm / 3 = 99mm per label */
+      /* Exactly 1/3 of the available height */
+      flex: 1; 
       
       display: flex;
       flex-direction: column;
@@ -197,195 +118,170 @@
       align-items: center;
       text-align: center;
       
-      border: 3px solid #1e293b;
-      border-top: none;
+      border: 2px solid #000; /* The "Table" border */
       
-      padding: 10px;
-      background: #ffffff;
-      position: relative;
+      /* Use margin-top: -2px to merge borders so they look like a single table */
+      margin-top: -2px; 
+      padding: 5px;
     }
 
+    /* Fix top border for the first item */
     .label-container:first-child {
-      border-top: 3px solid #1e293b;
+      margin-top: 0;
     }
 
     /* --- TEXT STYLING --- */
     .txt-name { 
-      font-size: 26pt; 
+      font-size: 22pt; 
       font-weight: 900; 
       text-transform: uppercase; 
-      margin: 0 0 8px 0;
+      margin: 0 0 5px 0;
       line-height: 1.1;
-      color: #0f172a;
     }
     
     .txt-comp { 
-      font-size: 18pt; 
+      font-size: 16pt; 
       font-weight: 700; 
-      margin: 0 0 8px 0;
-      color: #334155;
+      margin: 0 0 5px 0;
     }
     
     .txt-ware { 
-      font-size: 17pt; 
-      font-weight: 900;
-      margin: 0 0 12px 0;
-      color: #1e40af;
+      font-size: 15pt; 
+      font-weight: 900; /* BOLD as requested */
+      margin: 0 0 10px 0;
+      color: #000;
     }
 
     .barcode-svg {
-      width: 75%;
-      max-width: 400px;
-      height: 70px;
-      margin: 10px 0;
+      width: 80%;
+      height: 65px; /* Fixed height to prevent overflow */
+      margin: 5px 0;
       display: block;
     }
 
     .txt-meta {
-      font-size: 20pt; 
+      font-size: 18pt; 
       font-weight: 700;
-      margin: 4px 0;
-      color: #0f172a;
+      margin: 2px 0;
     }
 
-    /* --- RESPONSIVE DESIGN FOR MOBILE/TABLET --- */
-    @media (max-width: 968px) {
+    /* --- RESPONSIVE DESIGN --- */
+    @media (max-width: 768px) {
       body {
         padding: 10px;
       }
 
       .input-panel {
-        padding: 30px 20px;
-        border-radius: 12px;
-      }
-
-      .input-panel h1 {
-        font-size: 28px;
-      }
-
-      .page {
-        transform: scale(0.7);
-        transform-origin: top center;
-        margin-bottom: -90mm;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .input-panel {
-        padding: 25px 18px;
+        padding: 20px;
       }
 
       .input-panel h1 {
         font-size: 24px;
       }
 
-      .button-group {
-        flex-direction: column;
-      }
-
       button {
         width: 100%;
-        min-width: auto;
+        margin-right: 0;
+        margin-bottom: 10px;
       }
 
       .page {
         transform: scale(0.5);
+        transform-origin: top center;
         margin-bottom: -150mm;
       }
     }
 
     @media (max-width: 480px) {
-      .input-panel h1 {
-        font-size: 20px;
-      }
-
-      input, textarea {
-        font-size: 14px;
-        padding: 12px;
-      }
-
-      textarea {
-        min-height: 180px;
-      }
-
       .page {
         transform: scale(0.35);
-        margin-bottom: -195mm;
+        margin-bottom: -190mm;
       }
     }
 
-    /* --- CRITICAL PRINT CSS FOR PERFECT A4 OUTPUT --- */
+    /* --- CRITICAL PRINT CSS --- */
     @page {
       size: A4 portrait;
       margin: 0;
     }
 
     @media print {
-      html, body {
-        width: 210mm;
-        height: 297mm;
+      body {
         margin: 0;
         padding: 0;
         background: white;
       }
       
+      /* HIDE INPUT FORM WHEN PRINTING */
       .input-panel { 
         display: none !important; 
       }
-
+      
       #previewArea {
         margin: 0;
         padding: 0;
-        gap: 0;
       }
-      
+
       .page {
         margin: 0;
         padding: 0;
         box-shadow: none;
-        border: none;
         width: 210mm;
         height: 297mm;
         page-break-after: always;
+        
+        /* REMOVE PADDING FOR PRINT - FILL ENTIRE PAGE */
+        padding: 0 !important;
+        
         display: flex;
         flex-direction: column;
-        position: relative;
       }
       
+      /* Avoid extra blank page at the end */
       .page:last-child {
         page-break-after: auto;
       }
 
       .label-container {
+        /* Each label takes EXACTLY 1/3 of A4 height (99mm) */
+        flex: 1;
         width: 210mm;
         height: 99mm;
+        
         border: 3px solid #000;
         border-top: none;
-        padding: 8mm;
-        page-break-inside: avoid;
+        margin-top: 0;
+        padding: 10mm;
+        
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        text-align: center;
+        
+        page-break-inside: avoid;
       }
 
       .label-container:first-child {
         border-top: 3px solid #000;
       }
 
-      /* Ensure exact sizing for print */
+      /* TEXT SIZES FOR PRINT */
       .txt-name { 
-        font-size: 26pt; 
-        margin: 0 0 6px 0;
+        font-size: 22pt; 
+        font-weight: 900; 
+        margin: 0 0 5px 0;
       }
       
       .txt-comp { 
-        font-size: 18pt; 
-        margin: 0 0 6px 0;
+        font-size: 16pt; 
+        font-weight: 700; 
+        margin: 0 0 5px 0;
       }
       
       .txt-ware { 
-        font-size: 17pt; 
+        font-size: 15pt; 
+        font-weight: 900;
         margin: 0 0 10px 0;
       }
 
@@ -396,7 +292,8 @@
       }
 
       .txt-meta {
-        font-size: 20pt; 
+        font-size: 18pt; 
+        font-weight: 700;
         margin: 3px 0;
       }
     }
@@ -406,45 +303,37 @@
 
   <!-- INPUT FORM -->
   <div class="input-panel">
-    <div class="header-section">
-      <h1>📦 Professional UPC Label Generator</h1>
-      <p class="subtitle">Perfect A4 printing • 3 labels per sheet</p>
-    </div>
-
-    <div class="alert-box">
-      ⚠️ <strong>Print Settings:</strong> Set page size to A4, orientation to Portrait, and margins to "None" or "Minimum"
-    </div>
+    <h1>Bulk UPC Label Generator</h1>
+    <p><b>Note:</b> In print settings, ensure Margins are set to "None" for perfect A4 output.</p>
 
     <div class="form-group">
-      <label>📝 Line 1 (Name)</label>
+      <label>Line 1 (Name)</label>
       <input type="text" id="line1" value="Nilu's collection,">
     </div>
 
     <div class="form-group">
-      <label>🏢 Line 2 (Company)</label>
+      <label>Line 2 (Company)</label>
       <input type="text" id="line2" value="BLINK COMMERCE PRIVATE LIMITED">
     </div>
 
     <div class="form-group">
-      <label>📍 Line 3 (Warehouse - BOLD)</label>
+      <label>Line 3 (Warehouse - BOLD)</label>
       <input type="text" id="line3" value="Hyderabad H3 - Feeder Warehouse">
     </div>
 
     <div class="form-group">
-      <label>🔢 UPC Data (Format: UPC,Quantity)</label>
+      <label>UPC Data (UPC,Quantity)</label>
       <textarea id="upcData" placeholder="20110519,31
 20110520,15
 20110521,6
 20110522,10
 20110523,25
 
-Add more lines as needed..."></textarea>
+Add more lines..."></textarea>
     </div>
 
-    <div class="button-group">
-      <button onclick="generateLabels()">🔄 Generate Preview</button>
-      <button class="btn-print" onclick="window.print()">🖨️ Print Labels</button>
-    </div>
+    <button onclick="generateLabels()">Generate Preview</button>
+    <button class="btn-print" onclick="window.print()">Print Labels</button>
   </div>
 
   <!-- PREVIEW / PRINT AREA -->
@@ -461,7 +350,7 @@ Add more lines as needed..."></textarea>
       const rawData = document.getElementById('upcData').value.trim();
 
       if (!rawData) { 
-        alert("⚠️ Please enter UPC data."); 
+        alert("Please enter UPC data."); 
         return; 
       }
 
@@ -474,18 +363,20 @@ Add more lines as needed..."></textarea>
         .filter(i => i.upc);
 
       if (items.length === 0) {
-        alert("⚠️ No valid UPC data found. Format: UPC,Quantity");
+        alert("No valid UPC data found. Please use format: UPC,Quantity");
         return;
       }
 
       const previewArea = document.getElementById('previewArea');
-      previewArea.innerHTML = '';
+      previewArea.innerHTML = ''; // Clear previous
 
-      // Process items in groups of 3 (one page)
+      // Loop through items in chunks of 3
       for (let i = 0; i < items.length; i += 3) {
+        // Create Page
         const page = document.createElement('div');
         page.className = 'page';
 
+        // Get chunk of 3 items (or less for last page)
         const chunk = items.slice(i, i + 3);
 
         // Always create exactly 3 label slots per page
@@ -507,27 +398,27 @@ Add more lines as needed..."></textarea>
             
             page.appendChild(labelDiv);
 
-            // Generate barcode asynchronously
+            // Generate Barcode
             setTimeout(() => {
               try {
                 JsBarcode(`#${bcId}`, item.upc, {
                   format: "CODE128",
                   width: 3,
-                  height: 65,
+                  height: 60,
                   displayValue: true,
-                  fontSize: 20,
+                  fontSize: 18,
                   fontOptions: "bold",
                   margin: 0
                 });
               } catch (e) {
-                console.error('Barcode generation error for UPC:', item.upc, e);
-                document.getElementById(bcId).outerHTML = `<div style="color: red; font-weight: bold;">Invalid UPC: ${item.upc}</div>`;
+                console.error('Barcode generation error:', e);
+                document.getElementById(bcId).innerHTML = '<text style="color: red;">Invalid UPC</text>';
               }
-            }, 10);
+            }, 0);
           } else {
-            // Empty slot - maintain structure but invisible
-            labelDiv.style.border = "none";
-            labelDiv.style.background = "transparent";
+            // Empty placeholder for layout consistency if last page has < 3 items
+            labelDiv.style.border = "2px solid #ddd"; // Light border for empty slot
+            labelDiv.innerHTML = '<div style="color: #ccc; font-size: 14pt;">Empty Slot</div>';
             page.appendChild(labelDiv);
           }
         }
@@ -535,18 +426,26 @@ Add more lines as needed..."></textarea>
         previewArea.appendChild(page);
       }
 
-      // Smooth scroll to preview
+      // Scroll to preview
       setTimeout(() => {
         previewArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 150);
+      }, 100);
     }
 
-    // Helper function to prevent XSS
+    // Helper function to prevent XSS attacks
     function escapeHtml(text) {
       const div = document.createElement('div');
       div.textContent = text;
       return div.innerHTML;
     }
+
+    // Auto-generate on page load if data exists
+    window.addEventListener('load', function() {
+      const upcData = document.getElementById('upcData').value.trim();
+      if (upcData) {
+        generateLabels();
+      }
+    });
   </script>
 
 </body>
