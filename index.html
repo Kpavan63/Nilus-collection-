@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bulk UPC Label Generator</title>
+  <title>Bulk UPC Label Generator - Professional Edition</title>
   <style>
-    /* --- RESET --- */
+    /* --- GLOBAL RESET --- */
     * { 
       box-sizing: border-box; 
       margin: 0;
@@ -20,7 +20,7 @@
       color: #1e293b;
     }
 
-    /* --- SCREEN ONLY: INPUT FORM --- */
+    /* --- INPUT FORM STYLING --- */
     .input-panel {
       max-width: 900px;
       margin: 0 auto;
@@ -103,7 +103,7 @@
       transition: all 0.3s ease;
       background: #f8fafc;
       resize: vertical;
-      min-height: 220px; /* Increased height */
+      min-height: 220px;
       line-height: 1.6;
     }
 
@@ -169,27 +169,27 @@
       flex-direction: column;
       align-items: center;
       padding: 20px 0;
+      gap: 30px;
     }
 
-    /* --- A4 PAGE STYLING --- */
+    /* --- A4 PAGE - SCREEN VIEW --- */
     .page {
       width: 210mm;
       height: 297mm;
       background: white;
-      margin-bottom: 30px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.12);
       border: 1px solid #e2e8f0;
-      
+      position: relative;
+      padding: 0;
+      page-break-after: always;
       display: flex;
       flex-direction: column;
-      
-      padding: 10mm;
-      page-break-after: always;
-      overflow: hidden;
     }
 
+    /* --- LABEL CONTAINER (EXACTLY 3 PER PAGE) --- */
     .label-container {
-      flex: 1; 
+      width: 210mm;
+      height: 99mm; /* 297mm / 3 = 99mm per label */
       
       display: flex;
       flex-direction: column;
@@ -198,68 +198,85 @@
       text-align: center;
       
       border: 3px solid #1e293b;
-      border-radius: 4px;
+      border-top: none;
       
-      margin-top: -3px; 
-      padding: 8px;
+      padding: 10px;
       background: #ffffff;
+      position: relative;
     }
 
     .label-container:first-child {
-      margin-top: 0;
+      border-top: 3px solid #1e293b;
     }
 
     /* --- TEXT STYLING --- */
     .txt-name { 
-      font-size: 22pt; 
+      font-size: 26pt; 
       font-weight: 900; 
       text-transform: uppercase; 
-      margin: 0 0 6px 0;
+      margin: 0 0 8px 0;
       line-height: 1.1;
       color: #0f172a;
     }
     
     .txt-comp { 
-      font-size: 16pt; 
+      font-size: 18pt; 
       font-weight: 700; 
-      margin: 0 0 6px 0;
+      margin: 0 0 8px 0;
       color: #334155;
     }
     
     .txt-ware { 
-      font-size: 15pt; 
+      font-size: 17pt; 
       font-weight: 900;
-      margin: 0 0 10px 0;
+      margin: 0 0 12px 0;
       color: #1e40af;
     }
 
     .barcode-svg {
-      width: 80%;
-      height: 65px;
-      margin: 8px 0;
+      width: 75%;
+      max-width: 400px;
+      height: 70px;
+      margin: 10px 0;
       display: block;
     }
 
     .txt-meta {
-      font-size: 18pt; 
+      font-size: 20pt; 
       font-weight: 700;
-      margin: 3px 0;
+      margin: 4px 0;
       color: #0f172a;
     }
 
-    /* --- RESPONSIVE DESIGN --- */
-    @media (max-width: 768px) {
+    /* --- RESPONSIVE DESIGN FOR MOBILE/TABLET --- */
+    @media (max-width: 968px) {
       body {
         padding: 10px;
       }
 
       .input-panel {
-        padding: 25px 20px;
+        padding: 30px 20px;
         border-radius: 12px;
       }
 
       .input-panel h1 {
-        font-size: 26px;
+        font-size: 28px;
+      }
+
+      .page {
+        transform: scale(0.7);
+        transform-origin: top center;
+        margin-bottom: -90mm;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .input-panel {
+        padding: 25px 18px;
+      }
+
+      .input-panel h1 {
+        font-size: 24px;
       }
 
       .button-group {
@@ -272,15 +289,14 @@
       }
 
       .page {
-        transform: scale(0.45);
-        transform-origin: top center;
-        margin-bottom: -120mm;
+        transform: scale(0.5);
+        margin-bottom: -150mm;
       }
     }
 
     @media (max-width: 480px) {
       .input-panel h1 {
-        font-size: 22px;
+        font-size: 20px;
       }
 
       input, textarea {
@@ -294,32 +310,46 @@
 
       .page {
         transform: scale(0.35);
-        margin-bottom: -160mm;
+        margin-bottom: -195mm;
       }
     }
 
-    /* --- CRITICAL PRINT CSS --- */
+    /* --- CRITICAL PRINT CSS FOR PERFECT A4 OUTPUT --- */
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
     @media print {
-      @page {
-        size: A4;
-        margin: 0;
-      }
-      
-      body {
+      html, body {
+        width: 210mm;
+        height: 297mm;
         margin: 0;
         padding: 0;
         background: white;
       }
       
-      .input-panel { display: none !important; }
+      .input-panel { 
+        display: none !important; 
+      }
+
+      #previewArea {
+        margin: 0;
+        padding: 0;
+        gap: 0;
+      }
       
       .page {
         margin: 0;
+        padding: 0;
         box-shadow: none;
         border: none;
         width: 210mm;
         height: 297mm;
         page-break-after: always;
+        display: flex;
+        flex-direction: column;
+        position: relative;
       }
       
       .page:last-child {
@@ -327,8 +357,47 @@
       }
 
       .label-container {
+        width: 210mm;
+        height: 99mm;
         border: 3px solid #000;
-        border-radius: 0;
+        border-top: none;
+        padding: 8mm;
+        page-break-inside: avoid;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .label-container:first-child {
+        border-top: 3px solid #000;
+      }
+
+      /* Ensure exact sizing for print */
+      .txt-name { 
+        font-size: 26pt; 
+        margin: 0 0 6px 0;
+      }
+      
+      .txt-comp { 
+        font-size: 18pt; 
+        margin: 0 0 6px 0;
+      }
+      
+      .txt-ware { 
+        font-size: 17pt; 
+        margin: 0 0 10px 0;
+      }
+
+      .barcode-svg {
+        width: 75%;
+        height: 70px;
+        margin: 8px 0;
+      }
+
+      .txt-meta {
+        font-size: 20pt; 
+        margin: 3px 0;
       }
     }
   </style>
@@ -338,12 +407,12 @@
   <!-- INPUT FORM -->
   <div class="input-panel">
     <div class="header-section">
-      <h1>📦 Bulk UPC Label Generator</h1>
-      <p class="subtitle">Professional label printing made simple</p>
+      <h1>📦 Professional UPC Label Generator</h1>
+      <p class="subtitle">Perfect A4 printing • 3 labels per sheet</p>
     </div>
 
     <div class="alert-box">
-      ⚠️ <strong>Print Tip:</strong> Set margins to "None" in print settings for best results
+      ⚠️ <strong>Print Settings:</strong> Set page size to A4, orientation to Portrait, and margins to "None" or "Minimum"
     </div>
 
     <div class="form-group">
@@ -362,11 +431,12 @@
     </div>
 
     <div class="form-group">
-      <label>🔢 UPC Data (UPC,Quantity)</label>
+      <label>🔢 UPC Data (Format: UPC,Quantity)</label>
       <textarea id="upcData" placeholder="20110519,31
 20110520,15
 20110521,6
 20110522,10
+20110523,25
 
 Add more lines as needed..."></textarea>
     </div>
@@ -404,19 +474,21 @@ Add more lines as needed..."></textarea>
         .filter(i => i.upc);
 
       if (items.length === 0) {
-        alert("⚠️ No valid UPC data found. Please check your format.");
+        alert("⚠️ No valid UPC data found. Format: UPC,Quantity");
         return;
       }
 
       const previewArea = document.getElementById('previewArea');
       previewArea.innerHTML = '';
 
+      // Process items in groups of 3 (one page)
       for (let i = 0; i < items.length; i += 3) {
         const page = document.createElement('div');
         page.className = 'page';
 
         const chunk = items.slice(i, i + 3);
 
+        // Always create exactly 3 label slots per page
         for (let j = 0; j < 3; j++) {
           const item = chunk[j];
           const labelDiv = document.createElement('div');
@@ -425,31 +497,35 @@ Add more lines as needed..."></textarea>
           if (item) {
             const bcId = `bc-${i}-${j}`;
             labelDiv.innerHTML = `
-              <div class="txt-name">${line1}</div>
-              <div class="txt-comp">${line2}</div>
-              <div class="txt-ware">${line3}</div>
+              <div class="txt-name">${escapeHtml(line1)}</div>
+              <div class="txt-comp">${escapeHtml(line2)}</div>
+              <div class="txt-ware">${escapeHtml(line3)}</div>
               <svg id="${bcId}" class="barcode-svg"></svg>
-              <div class="txt-meta">UPC - ${item.upc}</div>
-              <div class="txt-meta">Quantity - ${item.qty}</div>
+              <div class="txt-meta">UPC - ${escapeHtml(item.upc)}</div>
+              <div class="txt-meta">Quantity - ${escapeHtml(item.qty)}</div>
             `;
             
             page.appendChild(labelDiv);
 
+            // Generate barcode asynchronously
             setTimeout(() => {
               try {
                 JsBarcode(`#${bcId}`, item.upc, {
                   format: "CODE128",
                   width: 3,
-                  height: 60,
+                  height: 65,
                   displayValue: true,
-                  fontSize: 18,
+                  fontSize: 20,
+                  fontOptions: "bold",
                   margin: 0
                 });
               } catch (e) {
-                console.error('Barcode generation error:', e);
+                console.error('Barcode generation error for UPC:', item.upc, e);
+                document.getElementById(bcId).outerHTML = `<div style="color: red; font-weight: bold;">Invalid UPC: ${item.upc}</div>`;
               }
-            }, 0);
+            }, 10);
           } else {
+            // Empty slot - maintain structure but invisible
             labelDiv.style.border = "none";
             labelDiv.style.background = "transparent";
             page.appendChild(labelDiv);
@@ -462,7 +538,14 @@ Add more lines as needed..."></textarea>
       // Smooth scroll to preview
       setTimeout(() => {
         previewArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+      }, 150);
+    }
+
+    // Helper function to prevent XSS
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
     }
   </script>
 
