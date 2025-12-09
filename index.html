@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Bulk UPC Label Generator - Glass UI</title>
+  <title>Bulk UPC Label Generator - Table Layout</title>
 
   <style>
+    /* --- CSS Variables & Reset --- */
     :root {
-      --glass-bg: rgba(255, 255, 255, 0.75);
-      --glass-border: 1px solid rgba(255, 255, 255, 0.5);
-      --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+      --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
       --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --text-main: #1f2937;
+      --text-main: #111827;
       --text-muted: #6b7280;
     }
 
@@ -20,13 +20,14 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', system-ui, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      /* Beautiful Gradient Background */
+      background: linear-gradient(135deg, #8EC5FC 0%, #E0C3FC 100%);
       min-height: 100vh;
-      color: var(--text-main);
       padding: 40px 20px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
+      color: var(--text-main);
     }
 
     .app-container {
@@ -37,12 +38,12 @@
       gap: 24px;
     }
 
-    /* Glass Card Style */
+    /* --- Glass Cards --- */
     .glass-card {
       background: var(--glass-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 16px;
       border: var(--glass-border);
       box-shadow: var(--glass-shadow);
       padding: 30px;
@@ -52,279 +53,243 @@
       margin: 0 0 8px;
       font-size: 28px;
       font-weight: 800;
-      background: linear-gradient(to right, #4f46e5, #9333ea);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #4f46e5;
     }
 
-    .header p {
-      margin: 0;
-      color: var(--text-muted);
-      font-size: 14px;
-    }
+    .header p { margin: 0; color: var(--text-muted); }
 
-    /* Grid Layout for Form */
-    .form-grid {
+    /* --- Form Styling (Table-like Grid) --- */
+    .form-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      margin-top: 20px;
+      gap: 40px;
     }
 
     .form-section h3 {
       font-size: 16px;
-      font-weight: 600;
-      margin: 0 0 16px;
-      color: #374151;
-      border-bottom: 2px solid rgba(79, 70, 229, 0.1);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid #e5e7eb;
       padding-bottom: 8px;
-      display: inline-block;
+      margin-top: 0;
+      color: #374151;
     }
 
-    .input-group {
-      margin-bottom: 16px;
-    }
-
+    .input-group { margin-bottom: 20px; }
+    
     .input-group label {
       display: block;
-      font-size: 13px;
       font-weight: 600;
-      color: var(--text-muted);
+      font-size: 14px;
       margin-bottom: 6px;
+      color: #374151;
     }
 
     .input-field {
       width: 100%;
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 1px solid rgba(209, 213, 219, 0.6);
-      background: rgba(255, 255, 255, 0.6);
-      font-size: 14px;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      background: rgba(255,255,255,0.8);
+      font-size: 15px;
       outline: none;
       transition: all 0.2s;
     }
 
     .input-field:focus {
-      background: #fff;
       border-color: var(--primary);
+      background: #fff;
       box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
     }
 
-    textarea.input-field {
-      min-height: 180px;
-      resize: vertical;
-      font-family: monospace;
-    }
-
-    .helper-text {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    /* Action Buttons */
-    .action-bar {
-      margin-top: 20px;
-      display: flex;
-      justify-content: flex-end;
-    }
+    textarea.input-field { min-height: 200px; font-family: monospace; }
 
     .btn {
-      padding: 12px 28px;
-      border-radius: 12px;
+      padding: 14px 32px;
+      background: var(--primary);
+      color: white;
       font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
       border: none;
-      transition: transform 0.1s, box-shadow 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+      transition: transform 0.1s;
+      width: 100%;
     }
-
+    .btn:hover { background: #4338ca; transform: translateY(-1px); }
     .btn:active { transform: scale(0.98); }
 
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary), #7c3aed);
-      color: white;
-      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-    }
-
-    .btn-primary:hover {
-      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
-    }
-
-    /* Preview Section */
-    #previewSection {
-      display: none;
-      animation: slideUp 0.4s ease-out;
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    /* --- Preview Section --- */
+    #previewSection { display: none; margin-top: 20px; }
 
     .preview-toolbar {
+      background: white;
+      padding: 15px 25px;
+      border-radius: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
-      background: rgba(255, 255, 255, 0.5);
-      padding: 12px 20px;
-      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
 
-    .preview-info {
-      font-size: 14px;
-      font-weight: 600;
-      color: #374151;
-    }
-
+    .toolbar-actions { display: flex; gap: 10px; }
+    
     .tool-btn {
       padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      border: 1px solid rgba(0,0,0,0.1);
+      border: 1px solid #e5e7eb;
       background: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
       color: #374151;
-      margin-left: 8px;
-      transition: all 0.2s;
     }
-
     .tool-btn:hover { background: #f9fafb; border-color: #d1d5db; }
-    
-    .tool-btn.pdf-btn { color: #dc2626; border-color: rgba(220, 38, 38, 0.2); }
-    .tool-btn.pdf-btn:hover { background: #fef2f2; }
-    
-    .tool-btn.word-btn { color: #2563eb; border-color: rgba(37, 99, 235, 0.2); }
-    .tool-btn.word-btn:hover { background: #eff6ff; }
+    .pdf-btn { color: #dc2626; border-color: #fecaca; }
+    .pdf-btn:hover { background: #fef2f2; }
+    .word-btn { color: #2563eb; border-color: #bfdbfe; }
+    .word-btn:hover { background: #eff6ff; }
 
-    /* A4 Page Preview */
-    .page-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      padding-bottom: 40px;
-    }
-
+    /* --- A4 Page & Label Table Styles --- */
     .page {
       width: 210mm;
-      min-height: 297mm;
+      height: 297mm; /* Fixed height for A4 */
       background: white;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-      padding: 15mm;
-      position: relative;
+      margin: 0 auto 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      padding: 15mm; /* Margins */
+      overflow: hidden;
+      page-break-after: always;
     }
 
-    .label {
-      height: calc((297mm - 30mm) / 3);
-      border-bottom: 1px dashed #e5e7eb;
-      padding-bottom: 5mm;
-      margin-bottom: 5mm;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
+    /* THE TABLE LAYOUT FOR LABELS */
+    .label-table {
+      width: 100%;
+      height: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
     }
-    
-    .label:last-child { border-bottom: none; margin-bottom: 0; }
 
-    /* Label Typography */
-    .label h1 { font-size: 20px; font-weight: 800; margin: 0 0 2px; color: #000; }
-    .label h2 { font-size: 18px; font-weight: 700; margin: 0 0 8px; color: #000; }
-    .label h3 { font-size: 16px; font-weight: 500; margin: 0 0 10px; color: #333; }
-    .label p { font-size: 14px; margin: 4px 0 0; color: #000; }
+    .label-row {
+      height: 33.33%; /* Exactly 1/3rd of the page height */
+    }
 
-    .barcode-svg { 
+    .label-cell {
+      vertical-align: middle;
+      text-align: center; /* Center everything */
+      border-bottom: 2px dashed #000; /* Cut line */
+      padding: 10px;
+    }
+
+    /* Remove border for the last label on the page */
+    .label-row:last-child .label-cell {
+      border-bottom: none;
+    }
+
+    /* --- FONT SIZES (Increased) --- */
+    .label-content h1 {
+      font-size: 26px; /* Bigger Name */
+      font-weight: 900;
+      margin: 0 0 5px;
+      text-transform: uppercase;
+      color: #000;
+    }
+
+    .label-content h2 {
+      font-size: 22px; /* Bigger Company */
+      font-weight: 800;
+      margin: 0 0 10px;
+      color: #000;
+    }
+
+    .label-content h3 {
+      font-size: 20px; /* Bigger Warehouse */
+      font-weight: 600;
+      margin: 0 0 15px;
+      color: #000;
+    }
+
+    .barcode-svg {
+      max-width: 90%;
+      height: 90px; /* Taller barcode */
+      margin: 10px auto;
       display: block;
-      margin: 10px 0;
-      max-width: 100%;
     }
 
-    /* Print Styles */
+    .label-meta {
+      font-size: 20px; /* Bigger UPC/Qty text */
+      font-weight: 700;
+      margin-top: 10px;
+      color: #000;
+      line-height: 1.4;
+    }
+
+    /* --- Print Mode --- */
     @media print {
       body { background: none; padding: 0; }
       .app-container > *:not(#previewSection) { display: none; }
       .preview-toolbar { display: none; }
-      .page-container { gap: 0; }
-      .glass-card { box-shadow: none; border: none; background: none; padding: 0; }
-      .page { box-shadow: none; margin: 0; page-break-after: always; width: 100%; height: 100%; }
-    }
-
-    @media (max-width: 768px) {
-      .form-grid { grid-template-columns: 1fr; }
+      .page { box-shadow: none; margin: 0; width: 210mm; height: 297mm; }
     }
   </style>
 </head>
 <body>
 
 <div class="app-container">
-  <!-- Config Card -->
+  
   <div class="glass-card header">
-    <h1>Bulk UPC Generator</h1>
-    <p>Generate professional warehouse labels. 3 labels per A4 page.</p>
+    <h1>Bulk UPC Label Generator</h1>
+    <p>Labels are centered and sized for readability. 3 labels per A4 sheet.</p>
   </div>
 
   <div class="glass-card">
-    <div class="form-grid">
-      <!-- Left: Fixed Details -->
+    <div class="form-container">
+      <!-- Section 1 -->
       <div class="form-section">
-        <h3>1. Static Details</h3>
-        
+        <h3>Label Details</h3>
         <div class="input-group">
-          <label>Line 1 (Name)</label>
+          <label>Line 1 (e.g., Name)</label>
           <input type="text" id="line1" class="input-field" value="Nilu’s collection,">
         </div>
-
         <div class="input-group">
-          <label>Line 2 (Company)</label>
+          <label>Line 2 (e.g., Company)</label>
           <input type="text" id="line2" class="input-field" value="BLINK COMMERCE PRIVATE LIMITED">
         </div>
-
         <div class="input-group">
-          <label>Line 3 (Warehouse)</label>
+          <label>Line 3 (e.g., Warehouse)</label>
           <input type="text" id="line3" class="input-field" value="Hyderabad H3 - Feeder Warehouse">
         </div>
       </div>
 
-      <!-- Right: Dynamic Data -->
+      <!-- Section 2 -->
       <div class="form-section">
-        <h3>2. UPC Data</h3>
-        
+        <h3>UPC Data</h3>
         <div class="input-group">
           <label>Paste Data (Format: UPC,Quantity)</label>
-          <textarea id="upcList" class="input-field" placeholder="20110519,31&#10;20110520,15&#10;20110521,50"></textarea>
-          <div class="helper-text">Enter one item per line. Example: <b>20110519,31</b></div>
+          <textarea id="upcList" class="input-field" placeholder="20110519,31&#10;20110520,15"></textarea>
+          <div style="font-size:12px; color:#666; margin-top:5px;">
+            One item per line. Example: <b>20110519,31</b>
+          </div>
         </div>
+        <button id="generateBtn" class="btn">Generate Labels</button>
       </div>
-    </div>
-
-    <div class="action-bar">
-      <button id="generateBtn" class="btn btn-primary">
-        <span>✨ Generate Labels</span>
-      </button>
     </div>
   </div>
 
-  <!-- Preview Section -->
+  <!-- Preview -->
   <div id="previewSection">
     <div class="preview-toolbar">
-      <div class="preview-info" id="previewCount">Ready to print</div>
-      <div class="tools">
+      <strong id="statusText">Ready</strong>
+      <div class="toolbar-actions">
         <button class="tool-btn pdf-btn" onclick="downloadPDF()">Download PDF</button>
         <button class="tool-btn word-btn" onclick="downloadWord()">Download Word</button>
-        <button class="tool-btn" onclick="window.print()">🖨️ Print</button>
+        <button class="tool-btn" onclick="window.print()">Print</button>
       </div>
     </div>
-
-    <div id="pagesWrapper" class="page-container">
-      <!-- Pages will be injected here -->
-    </div>
+    <div id="pagesWrapper"></div>
   </div>
+
 </div>
 
 <!-- Libraries -->
@@ -334,132 +299,122 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
 <script>
-  // DOM Elements
-  const generateBtn = document.getElementById('generateBtn');
-  const previewSection = document.getElementById('previewSection');
-  const pagesWrapper = document.getElementById('pagesWrapper');
-  const previewCount = document.getElementById('previewCount');
+  document.getElementById('generateBtn').addEventListener('click', generateLabels);
 
-  // Generate Function
-  generateBtn.addEventListener('click', () => {
+  function generateLabels() {
     const line1 = document.getElementById('line1').value;
     const line2 = document.getElementById('line2').value;
     const line3 = document.getElementById('line3').value;
     const rawData = document.getElementById('upcList').value.trim();
 
-    if (!rawData) {
-      alert("Please enter at least one UPC line.");
-      return;
+    if (!rawData) { alert("Please enter data."); return; }
+
+    const items = rawData.split('\n')
+      .filter(l => l.trim())
+      .map(l => {
+        const [u, q] = l.split(',');
+        return { upc: u?.trim(), qty: q?.trim() || '1' };
+      })
+      .filter(i => i.upc);
+
+    const pagesWrapper = document.getElementById('pagesWrapper');
+    pagesWrapper.innerHTML = '';
+
+    // We process items in chunks of 3 for each page
+    for (let i = 0; i < items.length; i += 3) {
+      const pageItems = items.slice(i, i + 3);
+      
+      const pageDiv = document.createElement('div');
+      pageDiv.className = 'page';
+      
+      // Create TABLE for this page
+      let tableHtml = `<table class="label-table">`;
+      
+      // We need exactly 3 rows per page. If we have fewer items, we print empty cells or stop.
+      // To maintain layout, let's just loop 3 times.
+      for (let j = 0; j < 3; j++) {
+        const item = pageItems[j];
+        tableHtml += `<tr class="label-row"><td class="label-cell">`;
+        
+        if (item) {
+          // Render the Label Content
+          tableHtml += `
+            <div class="label-content">
+              <h1>${line1}</h1>
+              <h2>${line2}</h2>
+              <h3>${line3}</h3>
+              <svg class="barcode-svg" id="bc-${i+j}"></svg>
+              <div class="label-meta">
+                <div>UPC - ${item.upc}</div>
+                <div>Quantity - ${item.qty}</div>
+              </div>
+            </div>
+          `;
+        }
+        
+        tableHtml += `</td></tr>`;
+      }
+      tableHtml += `</table>`;
+      
+      pageDiv.innerHTML = tableHtml;
+      pagesWrapper.appendChild(pageDiv);
+
+      // Render Barcodes for items that exist
+      pageItems.forEach((item, idx) => {
+        JsBarcode(`#bc-${i+idx}`, item.upc, {
+          format: "CODE128",
+          width: 3,        // Thicker bars
+          height: 80,      // Taller barcode
+          displayValue: true,
+          fontSize: 18,    // Bigger barcode text
+          margin: 10
+        });
+      });
     }
 
-    const lines = rawData.split('\n').filter(l => l.trim() !== '');
-    const items = lines.map(line => {
-      const [upc, qty] = line.split(',');
-      return { 
-        upc: upc ? upc.trim() : '', 
-        qty: qty ? qty.trim() : '1' 
-      };
-    }).filter(i => i.upc);
+    document.getElementById('previewSection').style.display = 'block';
+    document.getElementById('statusText').innerText = `Generated ${items.length} labels.`;
+    document.getElementById('previewSection').scrollIntoView({behavior: "smooth"});
+  }
 
-    // Clear previous
-    pagesWrapper.innerHTML = '';
-    
-    // Create Pages
-    let currentPage = null;
-    let itemsOnPage = 0;
-
-    items.forEach((item, index) => {
-      if (index % 3 === 0) {
-        currentPage = document.createElement('div');
-        currentPage.className = 'page';
-        pagesWrapper.appendChild(currentPage);
-        itemsOnPage = 0;
-      }
-
-      const labelHtml = `
-        <div class="label">
-          <h1>${line1}</h1>
-          <h2>${line2}</h2>
-          <h3>${line3}</h3>
-          <svg class="barcode-svg" id="bc-${index}"></svg>
-          <p><strong>UPC - ${item.upc}</strong></p>
-          <p><strong>Quantity - ${item.qty}</strong></p>
-        </div>
-      `;
-      
-      currentPage.insertAdjacentHTML('beforeend', labelHtml);
-      
-      // Render Barcode
-      JsBarcode(`#bc-${index}`, item.upc, {
-        format: "CODE128",
-        width: 2,
-        height: 60,
-        displayValue: true,
-        fontSize: 14,
-        margin: 0
-      });
-
-      itemsOnPage++;
-    });
-
-    // Show Preview
-    previewSection.style.display = 'block';
-    previewCount.innerText = `Generated ${items.length} labels on ${Math.ceil(items.length/3)} page(s)`;
-    
-    // Smooth Scroll
-    previewSection.scrollIntoView({ behavior: 'smooth' });
-  });
-
-  // Download PDF
   function downloadPDF() {
     const element = document.getElementById('pagesWrapper');
     const opt = {
       margin: 0,
       filename: 'labels.pdf',
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
+      html2canvas: { scale: 2 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
     html2pdf().set(opt).from(element).save();
   }
 
-  // Download Word
   function downloadWord() {
     const line1 = document.getElementById('line1').value;
     const line2 = document.getElementById('line2').value;
     const line3 = document.getElementById('line3').value;
     const rawData = document.getElementById('upcList').value.trim();
-    
-    if (!rawData) return;
+    if(!rawData) return;
 
-    const items = rawData.split('\n')
-      .filter(l => l.trim() !== '')
-      .map(line => {
-        const [upc, qty] = line.split(',');
-        return { upc: upc?.trim(), qty: qty?.trim() || '1' };
-      });
+    const items = rawData.split('\n').filter(l=>l.trim()).map(l=>{
+      const [u,q] = l.split(',');
+      return {upc:u?.trim(), qty:q?.trim()||'1'};
+    });
 
     const doc = new docx.Document({
-      sections: items.map((item, index) => {
-        // Only break page after every 3rd item, but Word is tricky with absolute positioning.
-        // We will just list them sequentially. 
-        // Note: Perfect visual replication in Word via JS is limited.
-        return {
-          children: [
-            new docx.Paragraph({ text: line1, heading: docx.HeadingLevel.HEADING_2 }),
-            new docx.Paragraph({ text: line2, bold: true }),
-            new docx.Paragraph({ text: line3 }),
-            new docx.Paragraph({ text: `UPC: ${item.upc}` }),
-            new docx.Paragraph({ text: `Quantity: ${item.qty}` }),
-            new docx.Paragraph({ text: "------------------------------------------------" }), // Separator
-          ]
-        };
-      })
+      sections: items.map(item => ({
+        children: [
+          new docx.Paragraph({ text: line1, heading: docx.HeadingLevel.HEADING_2, alignment: docx.AlignmentType.CENTER }),
+          new docx.Paragraph({ text: line2, bold: true, alignment: docx.AlignmentType.CENTER }),
+          new docx.Paragraph({ text: line3, alignment: docx.AlignmentType.CENTER }),
+          new docx.Paragraph({ text: `UPC - ${item.upc}`, bold: true, size: 32, alignment: docx.AlignmentType.CENTER, spacing: {before: 200} }),
+          new docx.Paragraph({ text: `Quantity - ${item.qty}`, bold: true, size: 32, alignment: docx.AlignmentType.CENTER }),
+          new docx.Paragraph({ text: "------------------------------------------------", alignment: docx.AlignmentType.CENTER }),
+        ]
+      }))
     });
 
-    docx.Packer.toBlob(doc).then(blob => {
-      saveAs(blob, "labels.docx");
-    });
+    docx.Packer.toBlob(doc).then(blob => { saveAs(blob, "labels.docx"); });
   }
 </script>
 
