@@ -252,7 +252,7 @@
 <div class="app">
   <div class="header">
     <h1>Bulk UPC Label Generator</h1>
-    <p>Generate A4 sheets with three labels per page. Each line has its own UPC and quantity.</p>
+    <p>Generate A4 sheets with 3 labels per page. Each line has its own UPC and quantity.</p>
   </div>
 
   <!-- Step 1: Static text -->
@@ -291,12 +291,11 @@
     </div>
 
     <div class="field">
-      <label for="upcList">Enter one record per line: UPC,Quantity</label>
+      <label for="upcList">Enter one record per line in this format: UPC,Quantity</label>
       <textarea id="upcList"
         placeholder="20110519,31&#10;20110520,12&#10;20110521,8"></textarea>
       <div class="hint">
-        Example line: <strong>20110519,31</strong>.  
-        The first value is the UPC, the second value is the quantity printed on that label.
+        Example line: <strong>20110519,31</strong> → UPC 20110519 with Quantity 31 on that label.
       </div>
     </div>
 
@@ -310,13 +309,14 @@
   <div id="pagesContainer"></div>
 </div>
 
-<!-- JsBarcode library -->
+<!-- JsBarcode library (JS CDN) -->
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script> <!-- [web:60] -->
 
 <script>
   function parseLines(raw) {
     return raw
-      .split(/\\r?\
+      .split(/
+?
 /)
       .map(line => line.trim())
       .filter(line => line.length > 0)
@@ -346,7 +346,8 @@
 
     const info = document.createElement('p');
     info.className = 'preview-title';
-    info.textContent = 'Preview: ' + items.length + ' label(s). Printed on A4 with three labels per page.';
+    info.textContent =
+      'Preview: ' + items.length + ' label(s). Printed on A4 with three labels per page.';
     pagesContainer.appendChild(info);
 
     let page = null;
