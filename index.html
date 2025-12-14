@@ -2,519 +2,600 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" href="https://www.google.com/s2/favicons?sz=64&domain=blinkit.com">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <!-- Dinosaur Favicon -->
-  <title>Bulk UPC Label AI</title>
+  <title>Nilu's Collection - Dashboard</title>
+  <link rel="icon" href="https://www.google.com/s2/favicons?sz=64&domain=blinkit.com">
   
-  <!-- Toastify.js CSS -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <!-- Google Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   
   <style>
-    /* --- MODERN RESET & BASE STYLES --- */
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     :root {
-      --primary-blue: #2563eb;
-      --dark-blue: #1d4ed8;
-      --success-green: #059669;
-      --dark-green: #047857;
-      --error-red: #dc2626;
+      --primary-color: #2563eb;
+      --primary-dark: #1d4ed8;
+      --blinkit-yellow: #f8cb46;
+      --blinkit-green: #0c831f;
+      --sidebar-bg: #1f2937;
+      --header-bg: #ffffff;
+      --footer-bg: #1f2937;
+      --sidebar-width: 280px;
+      --header-height: 70px;
+      --footer-height: 60px;
       --text-dark: #1f2937;
-      --text-medium: #4b5563;
-      --border-light: #e5e7eb;
-      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --text-light: #ffffff;
+      --text-gray: #6b7280;
+      --border-color: #e5e7eb;
+      --hover-bg: #374151;
+      --active-bg: #2563eb;
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f9fafb;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f3f4f6;
       color: var(--text-dark);
-      line-height: 1.6;
-      min-height: 100vh;
-      padding: 1rem;
+      overflow-x: hidden;
     }
 
-    /* --- HEADER --- */
-    .app-header {
-      text-align: center;
-      margin-bottom: 2rem;
+    /* === HEADER === */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      background: var(--header-bg);
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      border-bottom: 2px solid var(--border-color);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      z-index: 1000;
     }
 
-    .app-header h1 {
-      color: var(--primary-blue);
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-      font-weight: 800;
-      margin-bottom: 0.5rem;
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
-    .app-header p {
-      color: var(--text-medium);
-      font-size: clamp(0.875rem, 2vw, 1rem);
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-logo .material-icons {
+      color: var(--primary-color);
+      font-size: 36px;
+    }
+
+    .brand-text h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.2;
+    }
+
+    .brand-text p {
+      font-size: 0.75rem;
+      color: var(--text-gray);
       font-weight: 500;
     }
 
-    /* --- CONTAINER & CARD LAYOUT --- */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .input-panel {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: var(--shadow-lg);
-      margin-bottom: 2rem;
-      border: 1px solid var(--border-light);
-    }
-
-    /* --- FORM STYLES --- */
-    .form-grid {
-      display: grid;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    .form-group {
+    .header-right {
       display: flex;
-      flex-direction: column;
-    }
-
-    .form-group label {
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: var(--text-dark);
-      font-size: 0.95rem;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.875rem;
-      border: 2px solid var(--border-light);
-      border-radius: 8px;
-      font-size: 1rem;
-      font-family: inherit;
-      transition: all 0.2s ease;
-      background: #ffffff;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--primary-blue);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 200px;
-      font-family: 'Courier New', monospace;
-      font-weight: 600;
-    }
-
-    /* --- BUTTON STYLES --- */
-    .button-group {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    button {
-      flex: 1;
-      min-width: 150px;
-      padding: 0.875rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 700;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .btn-primary {
-      background: var(--primary-blue);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--dark-blue);
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-md);
-    }
-
-    .btn-success {
-      background: var(--success-green);
-      color: white;
-    }
-
-    .btn-success:hover {
-      background: var(--dark-green);
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-md);
-    }
-
-    button:active {
-      transform: translateY(0);
-    }
-
-    /* --- PREVIEW AREA --- */
-    #previewArea {
-      margin-top: 2rem;
-    }
-
-    /* --- A4 PAGE STYLING --- */
-    .page {
-      width: 210mm;
-      height: 297mm;
-      background: white;
-      margin: 0 auto 2rem auto;
-      box-shadow: var(--shadow-lg);
-      display: flex;
-      flex-direction: column;
-      padding: 10mm;
-      page-break-after: always;
-      overflow: hidden;
-    }
-
-    .label-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      text-align: center;
-      border: 2px solid #000;
-      margin-top: -2px;
-      padding: 1rem;
+      gap: 1rem;
     }
 
-    .label-container:first-child {
-      margin-top: 0;
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--primary-color);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
 
-    /* --- TEXT STYLING --- */
-    .txt-name {
-      font-size: 22pt;
-      font-weight: 900;
-      text-transform: uppercase;
-      margin: 0 0 5px 0;
-      line-height: 1.1;
-      color: var(--text-dark);
-      letter-spacing: 0.5px;
+    .user-profile:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     }
 
-    .txt-comp {
-      font-size: 16pt;
-      font-weight: 800;
-      margin: 0 0 5px 0;
-      color: var(--text-dark);
+    .user-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: white;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
     }
 
-    .txt-ware {
-      font-size: 15pt;
-      font-weight: 900;
-      margin: 0 0 10px 0;
-      color: #000;
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .user-info .user-name {
+      color: white;
+      font-weight: 700;
+      font-size: 0.95rem;
+      line-height: 1.2;
+    }
+
+    .user-info .user-role {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.7rem;
+      font-weight: 500;
       letter-spacing: 0.3px;
     }
 
-    .barcode-svg {
-      width: 80%;
-      height: 65px;
-      margin: 5px 0;
-      display: block;
+    /* === SIDEBAR === */
+    .sidebar {
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      width: var(--sidebar-width);
+      height: calc(100vh - var(--header-height) - var(--footer-height));
+      background: var(--sidebar-bg);
+      color: var(--text-light);
+      overflow-y: auto;
+      overflow-x: hidden;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+      z-index: 999;
+      transition: transform 0.3s ease;
     }
 
-    .txt-meta {
-      font-size: 18pt;
+    .sidebar.hidden {
+      transform: translateX(-100%);
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: #111827;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: #374151;
+      border-radius: 10px;
+    }
+
+    .menu-section {
+      padding: 1.5rem 0;
+    }
+
+    .menu-label {
+      padding: 0.5rem 1.5rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      margin: 2px 0;
-      color: var(--text-dark);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #9ca3af;
+      margin-bottom: 0.5rem;
     }
 
-    /* --- RESPONSIVE BREAKPOINTS --- */
-    @media (max-width: 768px) {
-      body {
-        padding: 0.5rem;
+    .menu-item {
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-left: 4px solid transparent;
+      color: #d1d5db;
+    }
+
+    .menu-item:hover {
+      background: var(--hover-bg);
+      color: white;
+      border-left-color: var(--primary-color);
+    }
+
+    .menu-item.active {
+      background: var(--active-bg);
+      color: white;
+      font-weight: 600;
+      border-left-color: white;
+    }
+
+    /* Blinkit themed menu item */
+    .menu-item.blinkit-theme {
+      background: var(--blinkit-green);
+      color: white;
+      font-weight: 600;
+    }
+
+    .menu-item.blinkit-theme:hover {
+      background: #0a6b19;
+      border-left-color: var(--blinkit-yellow);
+    }
+
+    .menu-item.blinkit-theme.active {
+      background: var(--blinkit-yellow);
+      color: var(--blinkit-green);
+      font-weight: 700;
+      border-left-color: var(--blinkit-green);
+    }
+
+    .menu-item .material-icons {
+      font-size: 22px;
+    }
+
+    .menu-item span {
+      font-size: 0.95rem;
+    }
+
+    .menu-divider {
+      height: 1px;
+      background: #374151;
+      margin: 1rem 1.5rem;
+    }
+
+    /* === MAIN CONTENT === */
+    .main-content {
+      margin-top: var(--header-height);
+      margin-left: var(--sidebar-width);
+      margin-bottom: var(--footer-height);
+      min-height: calc(100vh - var(--header-height) - var(--footer-height));
+      padding: 2rem;
+      transition: margin-left 0.3s ease;
+    }
+
+    .main-content.expanded {
+      margin-left: 0;
+    }
+
+    .content-wrapper {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      min-height: 600px;
+      border: 1px solid var(--border-color);
+    }
+
+    #contentFrame {
+      width: 100%;
+      min-height: 600px;
+      border: none;
+      background: white;
+      border-radius: 8px;
+    }
+
+    /* === FOOTER === */
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--footer-height);
+      background: var(--footer-bg);
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      border-top: 2px solid #111827;
+      z-index: 1000;
+    }
+
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .footer-left p {
+      font-size: 0.85rem;
+      color: #d1d5db;
+    }
+
+    .footer-left .developer-credit {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .footer-left .developer-credit strong {
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+
+    .footer-right {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .social-link {
+      color: #9ca3af;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .social-link:hover {
+      color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+
+    /* === MOBILE MENU TOGGLE === */
+    .menu-toggle-btn {
+      position: fixed;
+      top: calc(var(--header-height) + 1rem);
+      left: 1rem;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.9rem;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      z-index: 1001;
+      display: none;
+      transition: all 0.2s ease;
+    }
+
+    .menu-toggle-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .menu-toggle-btn .material-icons {
+      font-size: 24px;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 1024px) {
+      :root {
+        --sidebar-width: 260px;
       }
 
-      .input-panel {
+      .main-content {
         padding: 1.5rem;
       }
 
-      .form-grid {
-        gap: 1rem;
+      .brand-text h1 {
+        font-size: 1.3rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
       }
 
-      .button-group {
+      .sidebar.show {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 1rem;
+      }
+
+      .menu-toggle-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .header {
+        padding: 0 1rem;
+      }
+
+      .brand-text h1 {
+        font-size: 1.1rem;
+      }
+
+      .brand-text p {
+        font-size: 0.65rem;
+      }
+
+      .user-info {
+        display: none;
+      }
+
+      .footer {
         flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        height: auto;
       }
 
-      button {
-        width: 100%;
-        min-width: auto;
+      .footer-left {
+        text-align: center;
       }
 
-      .app-header h1 {
-        font-size: 1.75rem;
+      .content-wrapper {
+        padding: 1rem;
       }
     }
 
     @media (max-width: 480px) {
-      .input-panel {
-        padding: 1rem;
-        border-radius: 10px;
+      .brand-logo .material-icons {
+        font-size: 28px;
       }
 
-      .form-group input,
-      .form-group textarea {
+      .brand-text h1 {
+        font-size: 1rem;
+      }
+
+      .brand-text p {
+        display: none;
+      }
+
+      .main-content {
         padding: 0.75rem;
-        font-size: 0.95rem;
       }
 
-      button {
-        padding: 0.75rem;
-        font-size: 0.95rem;
+      .user-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
       }
-    }
-
-    /* --- CRITICAL PRINT CSS --- */
-    @media print {
-      @page {
-        size: A4;
-        margin: 0;
-      }
-
-      body {
-        margin: 0;
-        padding: 0;
-        background: white;
-      }
-
-      .app-header,
-      .input-panel {
-        display: none !important;
-      }
-
-      .page {
-        margin: 0;
-        box-shadow: none;
-        width: 210mm;
-        height: 297mm;
-        page-break-after: always;
-      }
-
-      .page:last-child {
-        page-break-after: auto;
-      }
-
-      #previewArea {
-        margin-top: 0;
-      }
-    }
-
-    /* --- UTILITY CLASSES --- */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border-width: 0;
-    }
-
-    .info-box {
-      background: #eff6ff;
-      border-left: 4px solid var(--primary-blue);
-      padding: 1rem;
-      border-radius: 6px;
-      margin-bottom: 1.5rem;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .info-box strong {
-      color: var(--primary-blue);
-      font-weight: 700;
     }
   </style>
 </head>
 <body>
 
   <!-- HEADER -->
-  <header class="app-header">
-    <h1>📦 Bulk UPC Label Generator</h1>
-    <p>Generate professional labels for your e-commerce inventory</p>
+  <header class="header">
+    <div class="header-left">
+      <div class="brand-logo">
+        <span class="material-icons">store</span>
+        <div class="brand-text">
+          <h1>Nilu's Collection</h1>
+          <p>E-commerce Dashboard</p>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="user-profile">
+        <div class="user-avatar">KP</div>
+        <div class="user-info">
+          <span class="user-name">Kpavan Kalyan</span>
+          <span class="user-role">MERN Stack Developer</span>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <!-- MAIN CONTAINER -->
-  <div class="container">
-
-    <!-- INPUT PANEL -->
-    <div class="input-panel">
-      <div class="info-box">
-        <strong>Printing Tip:</strong> In print settings, set Margins to "None" for best results.
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="menu-section">
+      <div class="menu-label">Main Menu</div>
+      
+      <div class="menu-item blinkit-theme active" onclick="loadPage('upc.html')">
+        <span class="material-icons">qr_code_2</span>
+        <span>Blinkit UPC Label Generator</span>
       </div>
-
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="line1">Line 1 (Name)</label>
-          <input type="text" id="line1" value="Nilu's collection,">
-        </div>
-
-        <div class="form-group">
-          <label for="line2">Line 2 (Company)</label>
-          <input type="text" id="line2" value="BLINK COMMERCE PRIVATE LIMITED">
-        </div>
-
-        <div class="form-group">
-          <label for="line3">Line 3 (Warehouse - BOLD)</label>
-          <input type="text" id="line3" value="Hyderabad H3 - Feeder Warehouse">
-        </div>
-
-        <div class="form-group">
-          <label for="upcData">UPC Data (UPC,Quantity)</label>
-          <textarea 
-            id="upcData" 
-            placeholder="Enter UPC data in format: UPC,Quantity&#10;&#10;Example:&#10;20110519,31&#10;20110520,15&#10;20110521,6&#10;20110522,10"
-            rows="8"></textarea>
-        </div>
+      
+      <div class="menu-item" onclick="loadPage('product-listing.html')">
+        <span class="material-icons">inventory_2</span>
+        <span>Product Listing</span>
       </div>
-
-      <div class="button-group">
-        <button class="btn-primary" onclick="generateLabels()">🎯 Generate Preview</button>
-        <button class="btn-success" onclick="window.print()">🖨️ Print Labels</button>
+      
+      <div class="menu-item" onclick="loadPage('barcode-scanner.html')">
+        <span class="material-icons">qr_code_scanner</span>
+        <span>Barcode Scanner</span>
+      </div>
+      
+      <div class="menu-item" onclick="loadPage('inventory.html')">
+        <span class="material-icons">warehouse</span>
+        <span>Inventory Management</span>
       </div>
     </div>
 
-    <!-- PREVIEW / PRINT AREA -->
-    <div id="previewArea"></div>
+    <div class="menu-divider"></div>
 
-  </div>
+    <div class="menu-section">
+      <div class="menu-label">Analytics</div>
+      
+      <div class="menu-item" onclick="loadPage('reports.html')">
+        <span class="material-icons">assessment</span>
+        <span>Reports & Analytics</span>
+      </div>
+      
+      <div class="menu-item" onclick="loadPage('performance.html')">
+        <span class="material-icons">trending_up</span>
+        <span>Performance</span>
+      </div>
+    </div>
 
-  <!-- JS LIBRARIES -->
-  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <div class="menu-divider"></div>
+
+    <div class="menu-section">
+      <div class="menu-label">Settings</div>
+      
+      <div class="menu-item" onclick="loadPage('settings.html')">
+        <span class="material-icons">settings</span>
+        <span>Settings</span>
+      </div>
+      
+      <div class="menu-item" onclick="loadPage('help.html')">
+        <span class="material-icons">help_outline</span>
+        <span>Help & Support</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MOBILE TOGGLE -->
+  <button class="menu-toggle-btn" onclick="toggleSidebar()">
+    <span class="material-icons">menu</span>
+  </button>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" id="mainContent">
+    <div class="content-wrapper">
+      <iframe id="contentFrame" src="label-generator.html"></iframe>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-left">
+      <p>&copy; 2025 Nilu's Collection | Hyderabad Operations</p>
+      <p class="developer-credit">Developed by <strong>Kpavan Kalyan</strong> - MERN Stack Developer</p>
+    </div>
+    <div class="footer-right">
+      <span class="material-icons social-link" title="GitHub">code</span>
+      <span class="material-icons social-link" title="LinkedIn">business</span>
+      <span class="material-icons social-link" title="Portfolio">language</span>
+    </div>
+  </footer>
 
   <script>
-    function generateLabels() {
-      const line1 = document.getElementById('line1').value;
-      const line2 = document.getElementById('line2').value;
-      const line3 = document.getElementById('line3').value;
-      const rawData = document.getElementById('upcData').value.trim();
-
-      if (!rawData) {
-        // ❌ ERROR TOAST
-        Toastify({
-          text: "⚠️ Please enter UPC data!",
-          duration: 3000,
-          close: true,
-          gravity: "top",
-          position: "center",
-          backgroundColor: "#dc2626",
-          stopOnFocus: true,
-          className: "toast-error"
-        }).showToast();
-        return;
+    function loadPage(page) {
+      document.getElementById('contentFrame').src = page;
+      
+      const menuItems = document.querySelectorAll('.menu-item');
+      menuItems.forEach(item => item.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      
+      if (window.innerWidth <= 768) {
+        document.getElementById('sidebar').classList.remove('show');
       }
-
-      const items = rawData.split('\n')
-        .filter(l => l.trim())
-        .map(l => {
-          const [u, q] = l.split(',');
-          return { upc: u?.trim(), qty: q?.trim() || '1' };
-        })
-        .filter(i => i.upc);
-
-      const previewArea = document.getElementById('previewArea');
-      previewArea.innerHTML = ''; // Clear previous
-
-      // Loop through items in chunks of 3
-      for (let i = 0; i < items.length; i += 3) {
-        // Create Page
-        const page = document.createElement('div');
-        page.className = 'page';
-
-        // Get chunk of 3 items
-        const chunk = items.slice(i, i + 3);
-
-        // Fill page with 3 slots
-        for (let j = 0; j < 3; j++) {
-          const item = chunk[j];
-          const labelDiv = document.createElement('div');
-          labelDiv.className = 'label-container';
-
-          if (item) {
-            const bcId = `bc-${i}-${j}`;
-            labelDiv.innerHTML = `
-              <div class="txt-name">${line1}</div>
-              <div class="txt-comp">${line2}</div>
-              <div class="txt-ware">${line3}</div>
-              <svg id="${bcId}" class="barcode-svg"></svg>
-              <div class="txt-meta">UPC - ${item.upc}</div>
-              <div class="txt-meta">Quantity - ${item.qty}</div>
-            `;
-            
-            page.appendChild(labelDiv);
-
-            // Generate Barcode
-            setTimeout(() => {
-              JsBarcode(`#${bcId}`, item.upc, {
-                format: "CODE128",
-                width: 3,
-                height: 60,
-                displayValue: true,
-                fontSize: 18,
-                margin: 0
-              });
-            }, 0);
-          } else {
-            // Empty placeholder for layout consistency if last page has < 3 items
-            labelDiv.style.border = "none"; // Hide border for empty slot
-            page.appendChild(labelDiv);
-          }
-        }
-        
-        previewArea.appendChild(page);
-      }
-
-      // ✅ SUCCESS TOAST
-      Toastify({
-        text: `✅ ${items.length} label(s) generated successfully!`,
-        duration: 3000,
-        close: true,
-        gravity: "top",
-        position: "center",
-        backgroundColor: "#059669",
-        stopOnFocus: true,
-        className: "toast-success"
-      }).showToast();
     }
 
-    // Auto-generate on load
-    window.addEventListener('DOMContentLoaded', () => {
-      generateLabels();
-    });
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('mainContent');
+      sidebar.classList.toggle('show');
+      
+      if (window.innerWidth > 768) {
+        mainContent.classList.toggle('expanded');
+        sidebar.classList.toggle('hidden');
+      }
+    }
 
-    // Auto-resize textarea as user types
-    document.getElementById('upcData').addEventListener('input', function() {
-      this.style.height = 'auto';
-      this.style.height = Math.max(200, this.scrollHeight) + 'px';
+    document.addEventListener('click', (e) => {
+      const sidebar = document.getElementById('sidebar');
+      const toggleBtn = document.querySelector('.menu-toggle-btn');
+      
+      if (window.innerWidth <= 768 && 
+          !sidebar.contains(e.target) && 
+          !toggleBtn.contains(e.target)) {
+        sidebar.classList.remove('show');
+      }
     });
   </script>
 
 </body>
 </html>
-
